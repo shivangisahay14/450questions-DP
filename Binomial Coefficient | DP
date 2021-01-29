@@ -1,0 +1,45 @@
+Time Complexity: O(n*k) 
+Auxiliary Space: O(n*k)
+
+int binomialCoeff(int n, int k)
+{
+    int C[n + 1][k + 1];
+    int i, j;
+ 
+    // Caculate value of Binomial Coefficient
+    // in bottom up manner
+    for (i = 0; i <= n; i++) {
+        for (j = 0; j <= min(i, k); j++) {
+            // Base Cases
+            if (j == 0 || j == i)
+                C[i][j] = 1;
+ 
+            // Calculate value using previously
+            // stored values
+            else
+                C[i][j] = C[i - 1][j - 1] + C[i - 1][j];
+        }
+    }
+ 
+    return C[n][k];
+}
+
+
+Time Complexity: O(n*k) 
+Auxiliary Space: O(k)
+
+int binomialCoeff(int n, int k)
+{
+    int C[k + 1];
+    memset(C, 0, sizeof(C));
+ 
+    C[0] = 1; // nC0 is 1
+ 
+    for (int i = 1; i <= n; i++) {
+        // Compute next row of pascal triangle using
+        // the previous row
+        for (int j = min(i, k); j > 0; j--)
+            C[j] = C[j] + C[j - 1];
+    }
+    return C[k];
+}
