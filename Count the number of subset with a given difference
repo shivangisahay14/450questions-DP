@@ -1,0 +1,5 @@
+sum(s1)=diff+sum of array/2
+
+the problem reduces to count the number of subsets with sum(s1).
+
+count subset  with given sum
