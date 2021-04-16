@@ -33,4 +33,31 @@ int coinChange(vector<int>& coins, int amount) {
         
         else
             return dp[n][amount];
+            
+            
+            
+ Recursive solution (TLE) T(n) = 2^n
+This solution is completly based upon recusion so it will give TLE.
+
+class Solution {
+public:
+    int solve(vector<int>coin,int size,int amount)
+{
+	if(amount == 0)
+		return 0;
+	if(amount<0)
+		return INT_MAX;
+	if(size==0)
+		return INT_MAX/2;
+	if(coin[size-1]<=amount)
+		return min(1+solve(coin,size,amount-coin[size-1]),solve(coin,size-1,amount));
+	else
+		return solve(coin,size-1,amount);
+	return INT_MAX;
+}
+    int coinChange(vector<int>& coins, int amount) {
+    return solve(coins,coins.size(),amount);
+
+  }
+};
     }
