@@ -1,0 +1,103 @@
+Algorithm: 
+
+1. str is the given string.
+
+2. n length of str
+
+3. len be the length of the longest 
+  palindromic subsequence of str
+
+4. minimum number of deletions 
+  min = n – len
+  
+  
+  int lps(string str)
+{
+    int n = str.size();
+ 
+    // Create a table to store
+    // results of subproblems
+    int L[n][n];
+ 
+    // Strings of length 1
+    // are palindrome of length 1
+    for (int i = 0; i < n; i++)
+        L[i][i] = 1;
+ 
+    // Build the table. Note that
+    // the lower diagonal values
+    // of table are useless and
+    // not filled in the process.
+    // c1 is length of substring
+    for (int cl = 2; cl <= n; cl++)
+    {
+        for (int i = 0;
+                 i < n - cl + 1; i++)
+        {
+            int j = i + cl - 1;
+            if (str[i] == str[j] &&
+                        cl == 2)
+                L[i][j] = 2;
+            else if (str[i] == str[j])
+                L[i][j] = L[i + 1][j - 1] + 2;
+            else
+                L[i][j] = max(L[i][j - 1],
+                            L[i + 1][j]);
+        }
+    }
+ 
+    // length of longest
+    // palindromic subseq
+    return L[0][n - 1];
+}
+ 
+// function to calculate
+// minimum number of deletions
+int minimumNumberOfDeletions(string str)
+{
+    int n = str.size();
+ 
+    // Find longest palindromic
+    // subsequence
+    int len = lps(str);
+ 
+    // After removing characters
+    // other than the lps, we
+    // get palindrome.
+    return (n - len);
+}
+
+
+
+recursive approach:
+
+int utility_fun_for_del(string str,
+                          int i, int j)
+{
+    if (i >= j)
+        return 0;
+ 
+    // Condition to compare charecters
+    if (str[i] == str[j])
+    {
+ 
+        // Recursive function call
+        return utility_fun_for_del(str,
+                                  i + 1, j - 1);
+    }
+ 
+    // Return value, increamenting by 1
+    return 1 + min(utility_fun_for_del(str, i + 1, j),
+                 utility_fun_for_del(str, i, j - 1));
+}
+ 
+// Function to calculate the minimum
+// Element required to delete for
+// Making string pelindrom
+int min_ele_del(string str)
+{
+ 
+    // Utility function call
+    return utility_fun_for_del(str, 0,
+                               str.length() - 1);
+}
