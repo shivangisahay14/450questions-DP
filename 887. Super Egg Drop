@@ -114,3 +114,58 @@ int eggDrop(int n, int k)
         }
         return dp[k][n];
         
+//recursive + memoization
+    int rec_mem(int k,int n,vector<vector<int>> &dp)
+    {
+        if(n==0)
+            return 0;
+        if(k==1)
+            return n;
+        if(dp[k][n]!=-1)
+            return dp[k][n];
+        int ans = n;
+        for(int i=1;i<=n;i++)
+        {
+            int left = rec_mem(k-1,i-1,dp);
+            int right = rec_mem(k,n-i,dp);
+            int temp = 1+max(left,right);
+            ans = min(temp,ans);
+        }
+        return dp[k][n] = ans;
+    }
+    
+    // DP
+    int fun(int K,int N)
+    {
+        if(N==0||N==1) 
+            return N;
+        if(K==1)
+            return N;
+        vector<vector<int>> dp(K+1,vector<int> (N+1,0));
+        for(int i=0;i<=K;i++)
+        {
+            dp[i][0]=0;
+            dp[i][1]=1;
+        }
+        for(int i=0;i<=N;i++)
+        {
+            dp[0][i]=0;
+            dp[1][i]=i;
+        }
+        for(int i=2;i<K+1;i++)
+        {
+            for(int j=2;j<N+1;j++)
+            {    
+                int ans = N;
+                for(int m=1;m<=j;m++)
+                {
+                    int left = dp[i-1][m-1]; 
+                    int right = dp[i][j-m];  
+                    int temp = 1+max(left,right); 
+                    ans=min(ans,temp);                           
+                }
+                dp[i][j]=ans;
+            }
+        }
+        return dp[K][N];
+    }
