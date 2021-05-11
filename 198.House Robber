@@ -1,0 +1,13 @@
+ int rob(vector<int>& nums) {
+        
+        vector<int>amount(nums.size());
+amount[0] = nums[0];
+if (nums.size() > 1) {
+	amount[1] = max(nums[0], nums[1]);
+}
+for (int i = 2; i < nums.size(); i++) {
+	amount[i] = max(amount[i - 1], amount[i - 2] + nums[i]);
+}
+return amount[nums.size() - 1];
+        
+    }
