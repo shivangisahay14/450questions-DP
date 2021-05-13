@@ -1,0 +1,86 @@
+ int countSubstrings(string s) {
+ 
+  // 1. recursive
+    // Time: O(n ^ 3)
+    int recursive(string& s) {
+        int count = 0;
+        for(int i = 0; i < s.size(); ++i) {
+            for(int j = i; j < s.size(); ++j) {
+                count += helper(s, i, j);
+            }
+        }
+        return count;
+    }
+    
+    // return 1 if s[i..j] is palindromic, 0 otherwise.
+    int helper(string& s, int i, int j) {
+        if (i >= j) return 1;
+        return s[i] == s[j] ? helper(s, i+1, j-1) : 0;
+    }
+    
+    
+    // 2. memoization
+    // Time: O(n ^ 2)
+    // space: O(n ^ 2)
+    int memoization(string& s) {
+        vector<vector<int>> mem(s.size(), vector<int>(s.size(), -1));
+        int count = 0;
+        for(int i = 0; i < s.size(); ++i) {
+            for(int j = i; j < s.size(); ++j) {
+                count += solve(mem, s, i, j);
+            }
+        }
+        return count;
+    }
+    
+    int solve(vector<vector<int>>& mem, string& s, int i, int j) {
+        if (i >= j) return 1;
+        if (mem[i][j] >= 0) return mem[i][j];
+        return mem[i][j] = s[i] == s[j] ? solve(mem, s, i+1, j-1) : 0;
+    }
+    
+ 
+ 
+ 
+ 
+ 
+       3.Tabulation 
+      /*  int n=s.size();
+        int count=0;
+        
+        vector<vector<bool>>dp(n+1,vector<bool>(n+1));
+        
+        
+        for(int g=0;g<n;g++){
+            for(int i=0,j=g;j<n;i++,j++){
+                
+                if(g==0)
+                {dp[i][j]=true;}
+                
+                else if(g==1)
+                { dp[i][j]= s[i]==s[j]?true:false;  }
+                
+                else
+                {dp[i][j]= (s[i]==s[j] and dp[i+1][j-1]==true)?true:false;}
+                
+                if(dp[i][j])
+                count++;
+                
+            }
+            
+        }
+        
+        return count;  */
+        
+        int ans=0;
+int n=s.size();
+for(int i=0;i<n;i++){
+int l=i,r=i+1;
+while(l>=0 && r<n && s[l--]==s[r++])ans++;
+l=i,r=i;
+while(l>=0 && r<n && s[l--]==s[r++]) ans++;
+}
+return ans;
+        
+    }
+};
