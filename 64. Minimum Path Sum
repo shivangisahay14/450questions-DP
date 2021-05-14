@@ -1,0 +1,68 @@
+Recursive Solution
+
+int getMinPath(vector <vector <int>> &grid, int i, int j) {
+        if (i == 0 && j == 0) {
+            return grid[i][j];
+        }
+        int m = INT_MAX;
+        if (j > 0) {
+            m = grid[i][j] + getMinPath(grid, i, j - 1);
+        }
+        if (i > 0) {
+            int s = grid[i][j] + getMinPath(grid, i - 1, j);
+            m = min(m, s);
+        }
+        return m;
+    }
+    
+
+
+Top Down DP - Memoization
+
+int getMinPath(vector <vector <int>> &grid, int i, int j, vector <vector<int>> dp) {
+        if (i == 0 && j == 0) {
+            return grid[i][j];
+        }
+        if (dp[i][j] != -1) {
+            return dp[i][j];
+        }
+        
+        int m = INT_MAX;
+        if (j > 0) {
+            m = grid[i][j] + getMinPath(grid, i, j - 1, dp);
+        }
+        if (i > 0) {
+            int s = grid[i][j] + getMinPath(grid, i - 1, j, dp);
+            m = min(m, s);
+        }
+        
+        dp[i][j] = m;
+        return dp[i][j];
+    }
+
+
+Bottom Up DP - Table Filling
+
+int getMinPath(vector <vector <int>> &grid) {
+        int r = grid.size();
+        int c = grid[0].size();
+
+        vector <vector <int>> dp(r, vector <int>(c, 0));
+        dp[0][0] = grid[0][0];
+        
+        for (int i = 1; i < c; i++) {
+            dp[0][i] = grid[0][i] + dp[0][i - 1];
+        }
+        
+        for (int i = 1; i < r; i++) {
+            dp[i][0] = grid[i][0] + dp[i - 1][0];
+        }
+
+        for (int i = 1; i < r; i++) {
+            for (int j = 1; j < c; j++) {
+                dp[i][j] = grid[i][j] + min(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+         
+        return dp[r - 1][c - 1];
+    }
