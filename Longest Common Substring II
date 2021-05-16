@@ -1,0 +1,69 @@
+ Recursion:
+ int lcs(int i, int j, int count)
+{
+ 
+    if (i == 0 || j == 0)
+        return count;
+ 
+    if (X[i - 1] == Y[j - 1]) {
+        count = lcs(i - 1, j - 1, count + 1);
+    }
+    count = max(count,
+                max(lcs(i, j - 1, 0),
+                    lcs(i - 1, j, 0)));
+    return count;
+}
+ 
+ Tabulation:
+ int longestCommonSubstr (string S1, string S2, int n, int m)
+    {
+        
+        int dp[n+1][m+1];
+        int ans=INT_MIN;
+        
+        for(int i=0;i<=n;i++){
+            for(int j=0;j<=m;j++){
+                
+                if(i==0 or j==0){
+                    dp[i][j]=0;
+                }
+                else if(S1[i-1]==S2[j-1]){
+                    dp[i][j]=1+dp[i-1][j-1];
+                    ans=max(ans,dp[i][j]);
+                }
+                
+                else{
+                    dp[i][j]=0;
+                }
+                
+            }
+        }
+        
+        return ans>0?ans:0;
+        // your code here
+    }
+    
+    Space optimized solution:
+       static int LCSubStr(String s,String t,
+                        int n,int m)
+    { 
+       
+        // Create DP table
+        int dp[][]=new int[2][m+1];
+        int res=0;
+      
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=m;j++)
+            {
+                if(s.charAt(i-1)==t.charAt(j-1))
+                {
+                    dp[i%2][j]=dp[(i-1)%2][j-1]+1;
+                    if(dp[i%2][j]>res)
+                        res=dp[i%2][j];
+                }
+                else dp[i%2][j]=0;
+            }
+        }
+        return res;
+    }
