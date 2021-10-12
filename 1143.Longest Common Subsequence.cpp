@@ -1,4 +1,4 @@
-method 1 - (recursive)
+Method 1 - (recursive)
  int lcs(string text1, string text2, int n, int m) {
         if(n == 0 || m == 0) return 0;
         else {
@@ -10,7 +10,7 @@ method 1 - (recursive)
 
 
 
-method 2 - (memoization/top-down)
+Method 2 - (memoization/top-down)
 class Solution {
 public:
     int** memo;
@@ -42,10 +42,7 @@ public:
 };
 
 
-
-
-
-method 3 - bottom up
+Method 3 - Bottom-up Approach
 int longestCommonSubsequence(string text1, string text2) {
         
         int m=text1.size();
