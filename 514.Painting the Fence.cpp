@@ -1,10 +1,9 @@
-diff = no of ways when color of last
-        two posts is different
- same = no of ways when color of last 
-        two posts is same
- total ways = diff + sum
+// LeetCode 514
+// diff = no of ways when color of last two posts is different
+// same = no of ways when color of last two posts is same
+// total ways = diff + sum
 
-for n = 1
+/* for n = 1
     diff = k, same = 0
     total = k
 
@@ -30,7 +29,7 @@ Hence we deduce that,
 total[i] = same[i] + diff[i]
 same[i]  = diff[i-1]
 diff[i]  = (diff[i-1] + diff[i-2]) * (k-1)
-         = total[i-1] * (k-1)
+         = total[i-1] * (k-1)  */
   
   
 long long countWays(int n, int k){
