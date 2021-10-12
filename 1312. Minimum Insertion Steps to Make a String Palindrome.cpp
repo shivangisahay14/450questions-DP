@@ -1,10 +1,10 @@
-The concept is based on the fact that minimum no of deletions will lead to longest palindromic subsequence,
-as no of insertions =no of deletions, therefore no of insertions= s.size()-length of LPS.
+//The concept is based on the fact that minimum no of deletions will lead to longest palindromic subsequence,
+//as no of insertions =no of deletions, therefore no of insertions= s.size()-length of LPS.
 
 
  int minInsertions(string s) {
         
-          string t =s;
+        string t =s;
         reverse(t.begin(),t.end());
         
         int m=s.size();
